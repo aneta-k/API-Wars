@@ -32,16 +32,7 @@ function getTableContent() {
 
             let planets = data.results;
             for (let planet of planets) {
-                tableContent.innerHTML += `<tr>
-                                                <td>${planet.name}</td>
-                                                <td>${planet.diameter}</td>
-                                                <td>${planet.climate}</td>
-                                                <td>${planet.terrain}</td>
-                                                <td>${planet.surface_water}</td>
-                                                <td>${planet.population}</td>
-                                                <td>${planet.residents}</td>
-                                                <td><button class="btn btn-secondary">Vote</button></td>
-                                           </tr>`
+                tableContent.innerHTML += addRowWithPlanet(planet);
             }
         })
 }
@@ -54,6 +45,23 @@ function handlePreviousPage() {
 function handleNextPage() {
     currentPage = nextPage;
     getTableContent();
+}
+
+function addRowWithPlanet(planet){
+    let diameter = planet.diameter !== "unknown" ? `${Number(planet.diameter).toLocaleString()} km` : planet.diameter;
+    let waterSurfacePercentage = planet.surface_water !== "unknown" ? `${planet.surface_water}%` : planet.surface_water;
+    let population = planet.population !== "unknown" ? `${Number(planet.population).toLocaleString()} people` : planet.population;
+    let row = `<tr>
+                    <td>${planet.name}</td>
+                    <td>${diameter}</td>
+                    <td>${planet.climate}</td>
+                    <td>${planet.terrain}</td>
+                    <td>${waterSurfacePercentage}</td>
+                    <td>${population}</td>
+                    <td>${planet.residents}</td>
+                    <td><button class="btn btn-secondary">Vote</button></td>
+                </tr>`;
+    return row;
 }
 
 init();
