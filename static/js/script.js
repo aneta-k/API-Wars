@@ -51,8 +51,8 @@ function addRowWithPlanet(planet){
     let diameter = planet.diameter !== "unknown" ? `${Number(planet.diameter).toLocaleString()} km` : planet.diameter;
     let waterSurfacePercentage = planet.surface_water !== "unknown" ? `${planet.surface_water}%` : planet.surface_water;
     let population = planet.population !== "unknown" ? `${Number(planet.population).toLocaleString()} people` : planet.population;
-    let residents = planet.residents.length === 0 ? 'No known residents' : createModal(planet.name, planet.residents);
-    let row = `<tr>
+    let residents = planet.residents.length === 0 ? 'No known residents' : initModal(planet.name, planet.residents);
+    return `<tr>
                     <td>${planet.name}</td>
                     <td>${diameter}</td>
                     <td>${planet.climate}</td>
@@ -62,21 +62,30 @@ function addRowWithPlanet(planet){
                     <td>${residents}</td>
                     <td><button class="btn btn-secondary">Vote</button></td>
                 </tr>`;
-    return row;
+    // return row;
 }
 
-function createModal(planetName, residents) {
+function initModal(planetName, residents){
+    createModal(planetName);
+    fillInModalTable(planetName, residents);
+    return `<button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#${planetName.replace(/ /gi, "")}">
+                ${residents.length} resident(s)
+            </button>`
+}
+
+function createModal(planetName) {
     const planetNameSimplified = planetName.replace(/ /gi, "");
-    let residentsTable = getResidentsTable(residents);
+    let residentsTable = createResidentsTable(planetNameSimplified);
     let modals = document.querySelector('#modals');
     modals.innerHTML += `<div class="modal fade" id="${planetNameSimplified}" tabindex="-1" aria-labelledby="${planetNameSimplified}Label" aria-hidden="true">
-                              <div class="modal-dialog">
+                              <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                         <h1 class="modal-title fs-5" id="${planetNameSimplified}Label">Residents of ${planetName}</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
+                                        <div class="table-responsive">
                                         ${residentsTable}
                                         </div>
                                         <div class="modal-footer">
@@ -85,13 +94,47 @@ function createModal(planetName, residents) {
                                     </div>
                               </div>
                           </div>`
-    return `<button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#${planetNameSimplified}">
-                ${residents.length} resident(s)
-            </button>`
 }
 
-function getResidentsTable(residents) {
+function createResidentsTable(planetName) {
+    return `<div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Height</th>
+                            <th>Mass</th>
+                            <th>Hair color</th>
+                            <th>Skin color</th>
+                            <th>Eye color</th>
+                            <th>Birth year</th>
+                            <th>Gender</th>
+                        </tr>
+                    </thead>
+                    <tbody id="${planetName}Table">
+                    </tbody> 
+                </table> 
+            </div>`
+}
 
+function fillInModalTable(planetName, residents) {
+    for(let resident of residents){
+        fetch(resident)
+            .then(response => response.json())
+            .then(data =>{
+                let modalTableBody = document.querySelector(`#${planetName.replace(/ /gi, "")}Table`);
+                modalTableBody.innerHTML += `<tr>
+                                        <td>${data.name}</td>
+                                        <td>${data.height}</td>
+                                        <td>${data.mass}</td>
+                                        <td>${data.hair_color}</td>
+                                        <td>${data.skin_color}</td>
+                                        <td>${data.eye_color}</td>
+                                        <td>${data.birth_year}</td>
+                                        <td>${data.gender}</td>
+                                    </tr>`
+            })
+    }
 }
 
 init();
