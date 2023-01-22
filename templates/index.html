@@ -1,2 +1,30 @@
 {% extends "base.html" %}
 
+{% block title %}
+    Planet list
+{% endblock %}
+
+{% block content %}
+    <h1>Star Wars universe planets</h1>
+    <button id="previous" class="btn btn-primary">Previous</button>
+    <button id="next" class="btn btn-primary">Next</button>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Diameter</th>
+                    <th>Climate</th>
+                    <th>Terrain</th>
+                    <th>Surface Water Percentage</th>
+                    <th>Population</th>
+                    <th>Residents</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="planets-data">
+
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
