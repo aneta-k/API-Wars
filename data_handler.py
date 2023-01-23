@@ -17,3 +17,11 @@ def register_new_user(cursor, username, password):
         INSERT INTO users (username, password)
         VALUES (%(username)s, %(password)s)"""
     cursor.execute(query, {'username': username, 'password': password})
+
+
+@database_common.connection_handler
+def vote_planet(cursor, planet_name):
+    query = f'''
+        INSERT INTO planet_votes (planet_name, submission_time)
+        VALUES (%(planet_name)s, CURRENT_TIMESTAMP(0))'''
+    cursor.execute(query, {'planet_name': planet_name})

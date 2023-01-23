@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 import os
 import data_handler
 import password_handler
@@ -55,6 +55,13 @@ def login():
 def logout():
     session.pop('username', None)
     return redirect(url_for('home'))
+
+
+@app.route('/vote', methods=["POST"])
+def vote():
+    request_content = request.json
+    data_handler.vote_planet(request_content['planet_name'])
+    return jsonify({'success': True})
 
 
 if __name__ == "__main__":

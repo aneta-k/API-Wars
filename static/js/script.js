@@ -52,7 +52,7 @@ function addRowWithPlanet(planet){
     let waterSurfacePercentage = planet.surface_water !== "unknown" ? `${planet.surface_water}%` : planet.surface_water;
     let population = planet.population !== "unknown" ? `${Number(planet.population).toLocaleString()} people` : planet.population;
     let residents = planet.residents.length === 0 ? 'No known residents' : initModal(planet.name, planet.residents);
-    let voteButton = userX !== 'None' ? `<td><button class="btn btn-secondary vote-btn">Vote</button></td>` : '';
+    let voteButton = userX !== 'None' ? `<td><button class="btn btn-secondary" onclick="voteForPlanet('${planet.name}')">Vote</button></td>` : '';
     return `<tr>
                     <td>${planet.name}</td>
                     <td>${diameter}</td>
@@ -136,6 +136,26 @@ function fillInModalTable(planetName, residents) {
                                     </tr>`
             })
     }
+}
+
+function voteForPlanet(planetName) {
+    const dataToConvert = {
+        'planet_name': planetName
+    }
+    fetch('/vote', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataToConvert)
+    })
+        .then(response => response.json())
+        .then(data =>{
+            alert(`Voted on planet ${planetName} successfully!`)
+        })
+        .catch(err => {
+            alert(`There was an error during voting on planet: ${err}`)
+        })
 }
 
 init();

@@ -1,5 +1,3 @@
-ALTER TABLE IF EXISTS ONLY public.users DROP CONSTRAINT IF EXISTS pk_user_id CASCADE;
-
 DROP TABLE IF EXISTS public.users;
 
 CREATE TABLE users (
@@ -8,5 +6,16 @@ CREATE TABLE users (
     password VARCHAR
 );
 
+DROP TABLE IF EXISTS public.planet_votes;
+
+CREATE TABLE planet_votes (
+    id serial NOT NULL,
+    planet_name varchar,
+    submission_time timestamp without time zone
+);
+
 ALTER TABLE only users
-    ADD CONSTRAINT pk_id PRIMARY KEY (id);
+    ADD CONSTRAINT pk_users_id PRIMARY KEY (id);
+
+ALTER TABLE ONLY planet_votes
+    ADD CONSTRAINT pk_planet_votes_id PRIMARY KEY (id);
