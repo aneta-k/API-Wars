@@ -1,3 +1,7 @@
 .table-responsive {
     margin-top: 20px;
 }
+
+.error-p {
+    color: #ee6f57;
+}

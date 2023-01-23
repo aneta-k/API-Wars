@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block content %}
+
+<div>
+    <h1>Login</h1>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <p class="error-p">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <form action="{{ url_for('login') }}" method="post">
+        <p><input type="text" name="username" placeholder="Username"/></p>
+        <p><input type="password" name="password" placeholder="Password"/></p>
+        <p><button type="submit" class="btn btn-primary btn-block">Let me in</button></p>
+    </form>
+</div>
+
+{% endblock %}

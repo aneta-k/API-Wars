@@ -25,19 +25,23 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Voting Statistics</a>
                 </li>
+            {% if user == None %}
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Registration</a>
+                    <a class="nav-link" href="{{ url_for('register') }}">Registration</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Login</a>
+                    <a class="nav-link" href="{{ url_for('login') }}">Login</a>
                 </li>
+            </ul>
+            {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Logout</a>
+                    <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
                 </li>
             </ul>
             <span class="navbar-text">
-                Signed is as XX XXX
+                Signed is as {{ user }}
             </span>
+            {% endif %}
         </div>
     </div>
 </nav>
