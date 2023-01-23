@@ -4,6 +4,7 @@ let nextPage = null;
 
 const previousButton = document.querySelector('#previous');
 const nextButton = document.querySelector('#next');
+let loading = document.querySelector("#loading");
 
 function init(){
     previousButton.addEventListener('click', handlePreviousPage);
@@ -15,6 +16,9 @@ function init(){
 function getTableContent() {
     let tableContent = document.querySelector('#planets-data');
     tableContent.innerHTML = '';
+    loading.classList.add("loading");
+    loading.style.display = "block";
+
     fetch(currentPage)
         .then(response => response.json())
         .then(data =>{
@@ -122,7 +126,10 @@ function createResidentsTable(planetName) {
 function fillInModalTable(planetName, residents) {
     for(let resident of residents){
         fetch(resident)
-            .then(response => response.json())
+            .then(response => {
+                loading.classList.remove("loading");
+                loading.style.display = "none";
+                return response.json()})
             .then(data =>{
                 let modalTableBody = document.querySelector(`#${planetName.replace(/ /gi, "")}Table`);
                 modalTableBody.innerHTML += `<tr>

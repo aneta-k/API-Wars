@@ -5,3 +5,24 @@
 .error-p {
     color: #ee6f57;
 }
+
+.loading {
+    width: 3rem;
+    height: 3rem;
+    border: 8px solid blue;
+    border-top: 8px solid black;
+    border-radius: 100%;
+    margin: 15px auto 0 auto;
+    visibility: visible;
+    animation: spin 2s infinite linear;
+}
+
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
