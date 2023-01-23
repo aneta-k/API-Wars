@@ -32,6 +32,7 @@ def get_votes(cursor):
     query = f'''
         SELECT planet_name, COUNT(*) 
         FROM planet_votes
-        GROUP BY planet_name'''
+        GROUP BY planet_name
+        ORDER BY count DESC'''
     cursor.execute(query)
     return cursor.fetchall()

@@ -9,6 +9,7 @@ function init(){
     previousButton.addEventListener('click', handlePreviousPage);
     nextButton.addEventListener('click', handleNextPage);
     getTableContent();
+    getVotingStatistics();
 }
 
 function getTableContent() {
