@@ -52,6 +52,7 @@ function addRowWithPlanet(planet){
     let waterSurfacePercentage = planet.surface_water !== "unknown" ? `${planet.surface_water}%` : planet.surface_water;
     let population = planet.population !== "unknown" ? `${Number(planet.population).toLocaleString()} people` : planet.population;
     let residents = planet.residents.length === 0 ? 'No known residents' : initModal(planet.name, planet.residents);
+    let voteButton = userX !== 'None' ? `<td><button class="btn btn-secondary vote-btn">Vote</button></td>` : '';
     return `<tr>
                     <td>${planet.name}</td>
                     <td>${diameter}</td>
@@ -60,7 +61,7 @@ function addRowWithPlanet(planet){
                     <td>${waterSurfacePercentage}</td>
                     <td>${population}</td>
                     <td>${residents}</td>
-                    <td><button class="btn btn-secondary">Vote</button></td>
+                    ${voteButton}
                 </tr>`;
     // return row;
 }
