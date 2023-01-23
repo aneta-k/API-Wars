@@ -26,7 +26,7 @@
                     <a class="nav-link" href="{{ url_for('home') }}">Planet list</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Voting Statistics</a>
+                    <a class="nav-link" data-bs-toggle="modal" data-bs-target="#votesModal" href="#">Voting Statistics</a>
                 </li>
             {% if user == None %}
                 <li class="nav-item">

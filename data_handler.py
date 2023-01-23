@@ -25,3 +25,13 @@ def vote_planet(cursor, planet_name):
         INSERT INTO planet_votes (planet_name, submission_time)
         VALUES (%(planet_name)s, CURRENT_TIMESTAMP(0))'''
     cursor.execute(query, {'planet_name': planet_name})
+
+
+@database_common.connection_handler
+def get_votes(cursor):
+    query = f'''
+        SELECT planet_name, COUNT(*) 
+        FROM planet_votes
+        GROUP BY planet_name'''
+    cursor.execute(query)
+    return cursor.fetchall()

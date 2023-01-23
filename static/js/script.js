@@ -151,10 +151,27 @@ function voteForPlanet(planetName) {
     })
         .then(response => response.json())
         .then(data =>{
-            alert(`Voted on planet ${planetName} successfully!`)
+            alert(`Voted on planet ${planetName} successfully!`);
+            getVotingStatistics();
         })
         .catch(err => {
             alert(`There was an error during voting on planet: ${err}`)
+        })
+}
+
+function getVotingStatistics(){
+    fetch('/get_voting_statistics')
+        .then(response => response.json())
+        .then(data =>{
+            console.log(data)
+            let modalVotes = document.querySelector('#stats-table')
+            modalVotes.innerHTML = '';
+            for (let stat of data){
+                modalVotes.innerHTML += `<tr>
+                                            <td>${stat.planet_name}</td>
+                                            <td>${stat.count}</td>
+                                         </tr>`
+            }
         })
 }
 

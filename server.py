@@ -64,5 +64,11 @@ def vote():
     return jsonify({'success': True})
 
 
+@app.route('/get_voting_statistics')
+def get_voting_statistics():
+    voting_statistics = data_handler.get_votes()
+    return jsonify(voting_statistics)
+
+
 if __name__ == "__main__":
     app.run(debug=True)
